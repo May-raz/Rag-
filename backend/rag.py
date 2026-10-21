@@ -45,9 +45,9 @@ def ask(question):
     return {"answer":answer_text, "sources":metadatas}
 
 if __name__ == "__main__":
-    X = ask(input("Type your Question here: "))
-    print(X["answer"])
-    print(X["sources"])
-    X = ask("best pizza in Rome")
-    print(X["answer"])
-    print(X["sources"])
+    result = ask(input("Type your Question here: "))
+    print(result["answer"])
+    print(result["sources"])
+    result = ask("best pizza in Rome")
+    print(result["answer"])
+    print(result["sources"])

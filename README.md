@@ -230,7 +230,8 @@ Keep the core rules for any dataset:
 - **Sources list isn't filtered:** it lists all 5 retrieved chunks (including
   duplicates and ones the answer didn't use).
 - **Citation format can vary:** the model sometimes writes `【book2, p. 422】`
-  instead of `[book2, p. 422]`. Make the prompt rule more explicit.
+  instead of `[book2, p. 422]`. A rule asking for `[]` brackets was added to
+  `SYSTEM_PROMPT`; check that it holds over more test questions.
 - **Overgeneralizing:** a fact from a small study or a rare subtype may be presented
   as general. The prompt could ask the model to say when that's the case.
 - **The API key isn't loaded from `.env` yet.** It has to be set in the shell
@@ -248,3 +249,20 @@ Keep the core rules for any dataset:
 - [ ] Load `GROQ_API_KEY` from `.env` with `python-dotenv`
 - [ ] Streamlit front end that imports `ask()` from `rag.py`
 - [ ] Share it with ngrok (public URL → local Streamlit)
+
+### Front end plan: Streamlit + ngrok
+
+```
+Phone / other PC ──► https://xxxx.ngrok-free.app ──► ngrok tunnel ──► your PC: streamlit (port 8501) ──► ask() ──► Chroma + Groq
+```
+
+- **Streamlit** turns a Python script into a web page (text box, button, answer).
+  It runs in the same Python as `rag.py`, so it can simply `from rag import ask`.
+  This replaces the earlier FastAPI + Expo plan: no separate API or phone app needed.
+- **ngrok** gives your local Streamlit a temporary public URL. It is a **tunnel, not
+  hosting**: the app only works while your PC, Streamlit and ngrok are all running.
+  The free URL changes each time you restart ngrok.
+- Run Streamlit **from `backend/`** (same relative-path rule as `rag.py`):
+  `streamlit run app.py`, then in a second window `ngrok http 8501`.
+- Anyone with the URL can use the app, and every question costs your Groq tokens.
+  Stop ngrok when you're not demoing.
