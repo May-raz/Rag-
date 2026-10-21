@@ -7,7 +7,7 @@ chroma_client = chromadb.PersistentClient(path="chromadb")
 
 collection = chroma_client.get_collection("medical_books")
 
-MAX_DISTANCE = 0.95
+MAX_DISTANCE = 1.2
 SYSTEM_PROMPT =""" You are medical assistant who answers questions from the knwoledge of these books. 
 You can only use the context provided to you to answer the question, do not use context from your own knowledge.
 You have 2 textbooks from which you get 5 excrepts with the most relevance from which you use to answer the questions asked from you.
